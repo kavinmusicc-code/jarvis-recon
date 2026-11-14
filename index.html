@@ -23,7 +23,7 @@
         .terminal-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
         .code-row { display: flex; justify-content: space-between; align-items: center; gap: 15px; background: rgba(2,6,23,0.6); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(56,189,248,0.2); }
         .code-text { font-family: 'Courier New', Courier, monospace; color: #38bdf8; font-size: 0.9rem; word-break: break-all; }
-        .copy-btn { background: #38bdf8; color: #020617; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 800; cursor: pointer; white-space: python; transition: 0.2s; }
+        .copy-btn { background: #38bdf8; color: #020617; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 800; cursor: pointer; transition: 0.2s; }
         .copy-btn:hover { background: #7dd3fc; }
         .tab-menu { display: flex; gap: 10px; margin-bottom: 5px; }
         .tab-btn { background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); color: #94a3b8; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
@@ -58,12 +58,12 @@
                 </div>
                 
                 <div id="winTab" class="code-row">
-                    <span class="code-text" id="winCmd">curl -o hunter.py https://raw.githubusercontent.com/prashant/kezu/main/hunter.py && python hunter.py</span>
+                    <span class="code-text" id="winCmd">curl -o hunter.py https://raw.githubusercontent.com/kavinmusicc-code/jarvis-recon/main/hunter.py && python hunter.py</span>
                     <button class="copy-btn" onclick="copyText('winCmd', this)">Copy</button>
                 </div>
 
                 <div id="macTab" class="code-row" style="display: none;">
-                    <span class="code-text" id="macCmd">curl -o hunter.py https://raw.githubusercontent.com/prashant/kezu/main/hunter.py && python3 hunter.py</span>
+                    <span class="code-text" id="macCmd">curl -o hunter.py https://raw.githubusercontent.com/kavinmusicc-code/jarvis-recon/main/hunter.py && python3 hunter.py</span>
                     <button class="copy-btn" onclick="copyText('macCmd', this)">Copy</button>
                 </div>
             </div>
@@ -90,7 +90,6 @@
             btn.innerText = 'Copied!';
             setTimeout(() => btn.innerText = 'Copy', 2000);
         }
-        // Canvas background code
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
