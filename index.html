@@ -31,11 +31,15 @@
         .tab-btn { background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); color: #94a3b8; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
         .tab-btn.active { background: #38bdf8; color: #020617; border-color: #38bdf8; }
 
-        /* Features Section */
-        .features { max-width: 900px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        /* Features & API Hub Section */
+        .section-title { text-align: center; font-size: 1.8rem; margin: 40px 0 20px 0; color: #fff; }
+        .features { max-width: 900px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .feature-card { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; padding: 20px; text-align: left; backdrop-filter: blur(5px); }
         .feature-card h3 { color: #38bdf8; font-size: 1.1rem; margin-bottom: 10px; }
-        .feature-card p { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; }
+        .feature-card p { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; }
+        
+        .provider-btn { display: inline-block; background: transparent; border: 1px solid #38bdf8; color: #38bdf8; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: 0.2s; }
+        .provider-btn:hover { background: rgba(56,189,248,0.2); color: #fff; }
 
         footer { text-align: center; padding: 30px; border-top: 1px solid rgba(56,189,248,0.2); color: #64748b; font-size: 0.9rem; margin-top: 50px; }
     </style>
@@ -48,7 +52,7 @@
     <section class="hero">
         <div class="badge">Autonomous AI-Powered Security Mesh</div>
         <h1>Deploy <span>Jarvis AI Agent</span> on Any Terminal Instantly</h1>
-        <p>Seamlessly integrated with OpenRouter neural models for automated vulnerability analysis, custom API key management, and self-healing recon operations.</p>
+        <p>Seamlessly integrated with OpenRouter and top LLM neural models for automated vulnerability analysis and self-healing recon operations.</p>
 
         <div class="terminal-box">
             <div class="terminal-header">
@@ -79,14 +83,16 @@
         </div>
     </section>
 
+    <h2 class="section-title">AI Powered Core & Providers Hub</h2>
     <section class="features">
         <div class="feature-card">
-            <h3>🤖 OpenRouter AI Integration</h3>
-            <p>Configure your custom API key (setkey) and switch between elite LLM models like DeepSeek or GPT-4o for advanced threat intelligence.</p>
+            <h3>🌐 OpenRouter API Hub</h3>
+            <p>Get instant access to hundreds of elite LLM models (DeepSeek, GPT-4, Claude) through a single API key.</p>
+            <a href="https://openrouter.ai/keys" target="_blank" class="provider-btn">Get OpenRouter Key &rarr;</a>
         </div>
         <div class="feature-card">
             <h3>⚡ Autonomous Recon Sweep</h3>
-            <p>Execute multi-threaded high-risk port sweeps paired with intelligent vulnerability assessment and AI security consulting (sk).</p>
+            <p>Execute multi-threaded high-risk port sweeps paired with intelligent vulnerability assessment and AI security consulting.</p>
         </div>
         <div class="feature-card">
             <h3>🛡️ Self-Healing Core</h3>
@@ -116,7 +122,7 @@
             btn.innerText = 'Copied!';
             setTimeout(() => btn.innerText = 'Copy', 2000);
         }
-        const canvas = document.getElementById('bgCanvas');
+        const canvas =.document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
