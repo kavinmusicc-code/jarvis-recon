@@ -5,24 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JARVIS // Autonomous AI Security Core</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
         body { background-color: #030712; color: #f8fafc; overflow-x: hidden; }
         #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
         
         /* Navbar */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: rgba(3, 7, 18, 0.85); border-bottom: 1px solid rgba(56,189,248,0.2); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.6rem; font-weight: 900; color: #38bdf8; letter-spacing: 3px; text-shadow: 0 0 20px rgba(56,189,248,0.6); display: flex; align-items: center; gap: 10px; }
-        .logo-dot { width: 10px; height: 10px; background: #38bdf8; border-radius: 50%; box-shadow: 0 0 10px #38bdf8; }
-        .nav-badge { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56,189,248,0.4); color: #38bdf8; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: rgba(3, 7, 18, 0.9); border-bottom: 1px solid rgba(56,189,248,0.2); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: #38bdf8; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-dot { width: 10px; height: 10px; background: #38bdf8; border-radius: 50%; box-shadow: 0 0 12px #38bdf8; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        .nav-links a:hover { color: #38bdf8; }
+        .nav-btn { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56,189,248,0.4); color: #38bdf8; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: 0.2s; }
+        .nav-btn:hover { background: #38bdf8; color: #030712; }
 
         /* Hero Section */
-        .hero { text-align: center; padding: 70px 20px 30px 20px; max-width: 1000px; margin: 0 auto; }
-        .hero h1 { font-size: 3.2rem; font-weight: 900; line-height: 1.15; margin-bottom: 20px; color: #fff; letter-spacing: -1px; }
-        .hero h1 span { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(56,189,248,0.4); }
-        .hero p { color: #94a3b8; font-size: 1.15rem; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+        .hero { text-align: center; padding: 80px 20px 50px 20px; max-width: 1000px; margin: 0 auto; }
+        .hero-badge { display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 25px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; line-height: 1.15; margin-bottom: 25px; color: #fff; letter-spacing: -1px; }
+        .hero h1 span { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 35px rgba(56,189,248,0.4); }
+        .hero p { color: #94a3b8; font-size: 1.15rem; margin-bottom: 40px; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6; }
 
         /* Terminal Component */
-        .terminal-box { background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(56,189,248,0.35); border-radius: 14px; max-width: 800px; margin: 0 auto 50px auto; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.9); overflow: hidden; backdrop-filter: blur(10px); }
+        .terminal-box { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56,189,248,0.4); border-radius: 14px; max-width: 850px; margin: 0 auto 60px auto; text-align: left; box-shadow: 0 30px 70px rgba(0,0,0,0.9); overflow: hidden; backdrop-filter: blur(10px); }
         .terminal-header { background: #020617; padding: 14px 20px; border-bottom: 1px solid rgba(56,189,248,0.2); display: flex; justify-content: space-between; align-items: center; }
         .terminal-dots { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
@@ -34,38 +39,55 @@
         .tab-btn { background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25); color: #94a3b8; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: 0.2s; }
         .tab-btn.active { background: #38bdf8; color: #030712; border-color: #38bdf8; box-shadow: 0 0 15px rgba(56,189,248,0.4); }
 
-        .code-row { display: flex; justify-content: space-between; align-items: center; gap: 15px; background: rgba(3,6,23,0.8); padding: 14px 18px; border-radius: 10px; border: 1px solid rgba(56,189,248,0.25); }
+        .code-row { display: flex; justify-content: space-between; align-items: center; gap: 15px; background: rgba(3,6,23,0.85); padding: 14px 18px; border-radius: 10px; border: 1px solid rgba(56,189,248,0.25); }
         .code-text { font-family: 'Courier New', Courier, monospace; color: #38bdf8; font-size: 0.88rem; word-break: break-all; }
         .copy-btn { background: #38bdf8; color: #030712; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.2s; white-space: nowrap; }
-        .copy-btn:hover { background: #7dd3fc; box-shadow: 0 0 10px #38bdf8; }
+        .copy-btn:hover { background: #7dd3fc; box-shadow: 0 0 12px #38bdf8; }
 
-        /* Grid Section (Features & AI Hub) */
-        .section-container { max-width: 1000px; margin: 0 auto 60px auto; padding: 0 20px; }
-        .section-title { font-size: 1.8rem; margin-bottom: 25px; color: #fff; font-weight: 800; text-align: center; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        /* Detailed Sections */
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 900; color: #fff; margin-bottom: 15px; }
+        .section-header p { color: #94a3b8; font-size: 1.05rem; max-width: 650px; margin: 0 auto; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .card { background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(56,189,248,0.2); border-radius: 14px; padding: 30px; text-align: left; backdrop-filter: blur(8px); transition: 0.3s; position: relative; overflow: hidden; }
+        .card:hover { border-color: rgba(56,189,248,0.6); transform: translateY(-4px); box-shadow: 0 15px 35px rgba(56,189,248,0.15); }
+        .card-icon { font-size: 2rem; margin-bottom: 15px; }
+        .card h3 { color: #38bdf8; font-size: 1.3rem; margin-bottom: 12px; }
+        .card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
         
-        .card { background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 25px; text-align: left; backdrop-filter: blur(8px); transition: 0.3s; position: relative; overflow: hidden; }
-        .card:hover { border-color: rgba(56,189,248,0.6); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(56,189,248,0.15); }
-        .card h3 { color: #38bdf8; font-size: 1.2rem; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .card p { color: #94a3b8; font-size: 0.92rem; line-height: 1.6; margin-bottom: 20px; }
-        
-        .action-link { display: inline-block; background: transparent; border: 1px solid #38bdf8; color: #38bdf8; padding: 8px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: 0.2s; }
+        .action-link { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 1px solid #38bdf8; color: #38bdf8; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: 0.2s; }
         .action-link:hover { background: #38bdf8; color: #030712; }
 
-        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(56,189,248,0.2); color: #64748b; font-size: 0.9rem; background: rgba(3,7,18,0.9); }
+        /* Docs / Commands Table Section */
+        .docs-box { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56,189,248,0.3); border-radius: 14px; padding: 30px; margin-top: 40px; }
+        .docs-table { width: 100%; border-collapse: collapse; text-align: left; margin-top: 20px; }
+        .docs-table th, .docs-table td { padding: 14px 18px; border-bottom: 1px solid rgba(56,189,248,0.15); font-size: 0.92rem; }
+        .docs-table th { color: #38bdf8; font-family: monospace; font-size: 1rem; }
+        .docs-table td { color: #94a3b8; }
+        .docs-table td code { color: #38bdf8; background: rgba(56,189,248,0.1); padding: 3px 8px; border-radius: 4px; font-family: monospace; }
+
+        footer { text-align: center; padding: 50px 20px; border-top: 1px solid rgba(56,189,248,0.2); color: #64748b; font-size: 0.9rem; background: rgba(3,7,18,0.95); margin-top: 80px; }
     </style>
 </head>
 <body>
     <canvas id="bgCanvas"></canvas>
     <nav>
-        <div class="logo">
+        <a href="#" class="logo">
             <div class="logo-dot"></div> JARVIS // AI
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#docs">Commands</a>
+            <a href="https://github.com/kavinmusicc-code/jarvis-recon" target="_blank" class="nav-btn">GitHub Repo</a>
         </div>
-        <div class="nav-badge">v3.0 Autonomous Core</div>
     </nav>
 
     <section class="hero">
-        <h1>Autonomous Security Mesh & <span>AI Recon Agent</span></h1>
+        <div class="hero-badge">v3.0 Autonomous Neural Security Core</div>
+        <h1>Autonomous Security Mesh & <br><span>AI Recon Agent</span></h1>
         <p>Deploy elite AI-powered penetration testing, self-healing vulnerability analysis, and real-time threat intelligence directly to any terminal in one click.</p>
 
         <div class="terminal-box">
@@ -97,29 +119,73 @@
         </div>
     </section>
 
-    <div class="section-container">
-        <h2 class="section-title">Neural Capabilities & AI Hub</h2>
+    <div class="container" id="features">
+        <div class="section-header">
+            <h2>Engineered for Absolute Supremacy</h2>
+            <p>Jarvis bridges the gap between raw terminal reconnaissance and advanced artificial intelligence.</p>
+        </div>
+
         <div class="grid-3">
             <div class="card">
-                <h3>🌐 OpenRouter & LLM Mesh</h3>
-                <p>Connect elite neural models (DeepSeek, GPT-4o, Claude) via your own secure API key (setkey) for advanced threat modeling.</p>
+                <div class="card-icon">🌐</div>
+                <h3>OpenRouter AI Mesh</h3>
+                <p>Plug in your custom API key (setkey) and harness elite neural models like DeepSeek, GPT-4o, or Claude for high-precision threat intelligence.</p>
                 <a href="https://openrouter.ai/keys" target="_blank" class="action-link">Get API Key &rarr;</a>
             </div>
             <div class="card">
-                <h3>⚡ Autonomous Recon Engine</h3>
-                <p>Execute multi-threaded high-risk vulnerability sweeps, automated port mapping, and intelligent security consulting (sk).</p>
-                <a href="#" class="action-link" onclick="alert('Agent is pre-configured and live via CLI installer!')">View Specs &rarr;</a>
+                <div class="card-icon">⚡</div>
+                <h3>Autonomous Recon Sweeps</h3>
+                <p>Execute multi-threaded high-risk port scanning paired with real-time AI security consulting and vulnerability modeling via simple commands.</p>
+                <a href="#docs" class="action-link">View Commands &rarr;</a>
             </div>
             <div class="card">
-                <h3>🛡️ Self-Healing Core</h3>
-                <p>Equipped with automated diagnostic routines and runtime exception patches (heal) ensuring uninterrupted operations.</p>
-                <a href="#" class="action-link" onclick="alert('Self-healing loop active inside hunter.py')">Learn More &rarr;</a>
+                <div class="card-icon">🛡️</div>
+                <h3>Self-Healing Core</h3>
+                <p>Equipped with intelligent error detection and diagnostic routines (heal) that autonomously diagnose and resolve runtime exceptions.</p>
+                <a href="https://github.com/kavinmusicc-code/jarvis-recon" target="_blank" class="action-link">Inspect Source &rarr;</a>
             </div>
+        </div>
+
+        <div class="docs-box" id="docs">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h2>Interactive Terminal Reference</h2>
+                <p>List of available commands inside the Jarvis CLI environment.</p>
+            </div>
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>scan &lt;target&gt;</code></td>
+                        <td>Performs high-risk port sweeps and initiates deep AI vulnerability threat modeling.</td>
+                    </tr>
+                    <tr>
+                        <td><code>ask &lt;prompt&gt;</code></td>
+                        <td>Consults the neural core on any security topic, exploit analysis, or mitigation steps.</td>
+                    </tr>
+                    <tr>
+                        <td><code>setkey &lt;api_key&gt;</code></td>
+                        <td>Securely configures and encrypts your OpenRouter LLM API key locally.</td>
+                    </tr>
+                    <tr>
+                        <td><code>model &lt;name&gt;</code></td>
+                        <td>Switches active LLM neural models dynamically (e.g., openai/gpt-4o).</td>
+                    </tr>
+                    <tr>
+                        <td><code>heal</code></td>
+                        <td>Triggers automated self-healing diagnostics and error patch routines.</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Jarvis Autonomous Framework. Engineered for Next-Gen Security Operators.</p>
+        <p>&copy; 2026 Jarvis Autonomous Security Framework. No subscription. No hosted tier. Pure open terminal intelligence.</p>
     </footer>
 
     <script>
@@ -145,7 +211,7 @@
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
-        for(let i=0; i<50; i++) particles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2.2, vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4});
+        for(let i=0; i<60; i++) particles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2.2, vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4});
         function animate() {
             ctx.fillStyle = 'rgba(3, 7, 18, 0.35)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#38bdf8';
